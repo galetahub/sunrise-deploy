@@ -11,6 +11,11 @@ module Capistrano
     end
 
     set :strategy, Sunrise::Deploy::Strategy::Simple.new(self)
+    set :rake, "bundle exec rake"
+
+    # Must be set for the password prompt from git to work
+    set :ssh_options, { :forward_agent => true }
+    set :default_run_options, { :pty => true}
 
     _cset :rails_env, "production"
     _cset :rvm_ruby_string, '1.9.3'
@@ -19,12 +24,6 @@ module Capistrano
     _cset :scm_passphrase, Proc.new { Capistrano::CLI.password_prompt("GIT Password for #{scm_user}:") }
     _cset :scm_verbose, true
     _cset :branch, "master"
-
-    # Must be set for the password prompt from git to work
-    _cset :ssh_options, { :forward_agent => true }
-    _cset :default_run_options, { :pty => true}
-
-    _cset :rake, "bundle exec rake"
 
     _cset :asset_precompile, true
     _cset :asset_env, "RAILS_GROUPS=assets"
