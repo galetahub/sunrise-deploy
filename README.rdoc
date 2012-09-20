@@ -1,0 +1,42 @@
+= Sunrise Desploy
+
+  Simple deployment schema for project
+
+== Install
+
+  group :development do
+    gem "sunrise-deploy"
+  end
+
+  bundle install
+
+  rails generate sunrise:deploy:install
+
+== Usage
+
+Update code, bundle install, migrate, assets precompile and restart server:
+
+  bundle exec cap app:deploy
+
+Update code:
+  
+  bundle exec cap app:update
+
+Restart server:
+
+  bundle exec cap app:restart
+
+Migrate db:
+
+  bundle exec cap app:migrate
+
+Precompile assets:
+
+  bundle exec cap assets:precompile
+
+Bundler install:
+  
+  bundle exec cap bundle:install
+
+
+Copyright (c) 2012 Fodojo, released under the MIT license
