@@ -30,6 +30,8 @@ module Capistrano
     _cset :assets_prefix, "assets"
     _cset :assets_role, [:web]
 
+    _cset :cache_clear, true
+
     namespace :app do
       desc "Update code, bundle install, migrate, assets precompile and restart server"
       task :deploy do
@@ -37,6 +39,14 @@ module Capistrano
         bundle.install
         db.migrate
         assets.precompile if asset_precompile
+        cache.clear if cache_clear
+        restart
+      end
+
+      desc "Update code and restart server"
+      task :touch do
+        update
+        cache.clear if cache_clear
         restart
       end
 
@@ -46,14 +56,17 @@ module Capistrano
         strategy.deploy!
       end
 
+      desc "Start application handler"
       task :start do
         run "#{try_sudo} sv start #{application}"
       end
 
+      desc "Stop application handler"
       task :stop do
         run "#{try_sudo} sv stop #{application}"
       end
 
+      desc "Restart application handler"
       task :restart, :roles => :app, :except => { :no_release => true } do
         run "#{try_sudo} sv restart #{application}"
       end

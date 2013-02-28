@@ -18,6 +18,10 @@ Update code, bundle install, migrate, assets precompile and restart server:
 
   bundle exec cap app:deploy
 
+Update code and restart server:
+
+  bundle exec cap app:touch
+
 Update code:
   
   bundle exec cap app:update
@@ -37,6 +41,10 @@ Precompile assets:
 Bundler install:
   
   bundle exec cap bundle:install
+
+Clear cached files in folders ["tmp/cache", "public/cache"]:
+  
+  bundle exec cap cache:clear
 
 
 Copyright (c) 2012 Fodojo, released under the MIT license
